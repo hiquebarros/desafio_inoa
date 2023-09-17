@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="my-2">
+  <div class="w-100 d-flex justify-content-start">
+    <h1 class="mb-4">Listagem</h1>
+  </div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Logo</th>
+          <th>Sigla</th>
+          <th>Nome</th>
+          <th>Setor</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for stock in stocks %}
+          <tr>
+            <td><img src="{{stock.logo}}"/></td>
+            <td>{{ stock.stock }}</td>
+            <td>{{ stock.name }}</td>
+            <td>{{ stock.sector }}</td>
+            <td>
+              <button><i class="fas fa-check"></i></button>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}
