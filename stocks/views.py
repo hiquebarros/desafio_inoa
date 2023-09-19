@@ -4,7 +4,6 @@ from .models import Stock
 from users.models import User
 
 class StocksListView(ListView):
-    template_name = 'stock_users/templates/index.html'
     def get(self, request): 
         try:
             user = User.objects.get(pk=request.user.id)
@@ -12,4 +11,4 @@ class StocksListView(ListView):
             
             return render(request, 'stocks/index.html', {'stocks': stocks})
         except User.DoesNotExist:
-            return render(request, 'user_not_found.html')
+            return render(request, 'stocks/user_not_found.html')
