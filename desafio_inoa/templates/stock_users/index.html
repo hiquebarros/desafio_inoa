@@ -1,13 +1,15 @@
 {% extends 'base.html' %}
-
+{% load l10n %}
 {% block content %}
+
   <div class="my-2">
     <div class="w-100 d-flex justify-content-start">
-      <h1 class="mb-4">Carteira de ações</h1>
+      <h1 class="mb-4">Carteira de monitoramento</h1>
     </div>
     <table class="table">
       <thead>
         <tr>
+          <th>Logo</th>
           <th>Nome</th>
           <th>Fechamento</th>
           <th>Variação</th>
@@ -15,22 +17,23 @@
           <th>Valor de mercado</th>
           <th>Preço de venda</th>
           <th>Preço de compra</th>
-          <th>Notificar por email</th>
-          <th>Atualizar em</th>
+          <th>Notificando por email</th>
+          <th>Intervalo de atualização</th>
         </tr>
       </thead>
       <tbody>
         {% for stock in stocks %}
           <tr>
-            <td>{{ stock.stock.name }}</td>
-            <td>{{ stock.close }}</td>
-            <td>{{ stock.change }}</td>
+            <td><img src="{{stock.stock.logo}}"/></td>
+            <td>{{ stock.stock.stock }}</td>
+            <td>R$ {{ stock.close|default:0|floatformat:2 }}</td>
+            <td>{{ stock.change|default:0|floatformat:2 }}%</td>
             <td>{{ stock.volume }}</td>
-            <td>{{ stock.market_cap }}</td>
-            <td>{{ stock.selling_price }}</td>
-            <td>{{ stock.buying_price }}</td>
+            <td>R$ {{ stock.market_cap| floatformat:2 }}</td>
+            <td>R$ {{ stock.selling_price|floatformat:"2" }}</td>
+            <td>R$ {{ stock.buying_price|floatformat:"2" }}</td>
             <td>{% if stock.is_notifying == 0 %}Não{% else %}Sim{% endif %}</td>
-            <td>{{ stock.update_period }} minutos</td>
+            <td>{{ stock.update_period }} minuto(s)</td>
           </tr>
         {% empty %}
           <tr>
