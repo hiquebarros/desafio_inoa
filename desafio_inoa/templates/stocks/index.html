@@ -25,7 +25,7 @@
       <tbody>
         {% for stock in stocks %}
           <tr>
-            <td><img src="{{stock.logo}}"/></td>
+            <td><img style="height: 56px; width: 56px;" src="{{stock.logo}}"/></td>
             <td>{{ stock.stock }}</td>
             <td>{{ stock.name }}</td>
             <td>{{ stock.sector }}</td>
@@ -50,6 +50,9 @@
 
             <form method="POST" action="{% url 'stocks:index' %}">
                 {% csrf_token %}
+                <div id="price-alert">
+
+                </div>
                 <div class="modal-body text-start">
                     <div class="form-group">
                         <label for="buying_price">Preço de compra:</label>
@@ -83,8 +86,8 @@
                 </div>
 
                 <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                     <button type="submit" class="btn btn-primary">Salvar</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                 </div>
             </form>
         </div>
@@ -97,9 +100,36 @@
   $('#selling_price').mask("#.##0,00", {reverse: true});
 
   $(".addStockButton").on("click", function() {
-    console.log($(this).data("stock-name"))
-    $("#stock").val($(this).data("stock-name"))
+    let stock = $(this).data("stock-name")
+    $("#stock").val('')
+    $("#stock").val(stock)
+
+    api_url = `https://brapi.dev/api/quote/list?sortBy=close&sortOrder=desc&limit=10&search=${stock}`
+
+    $.ajax({
+        url: api_url,
+        method: "GET",
+        dataType: "json",
+        success: function(response) {
+          if (response.stocks.length > 0) {
+                let currentPrice = response.stocks[0].close;
+                let message = `A cotação atual para essa ação é de R$ ${currentPrice}`;
+
+                $("#price-alert").html(`<div class="alert alert-info">${message}</div>`);
+            } else {
+
+                $("#price-alert").html('<div class="alert alert-danger">Nenhuma informação encontrada.</div>');
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.error("API Error:", textStatus, errorThrown);
+        }
+    });
+
 });
+
+
+
 </script>
 
 </html>
