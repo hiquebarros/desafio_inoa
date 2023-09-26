@@ -11,14 +11,12 @@
         <tr>
           <th>Logo</th>
           <th>Nome</th>
-          <th>Fechamento</th>
-          <th>Variação</th>
-          <th>Volume</th>
-          <th>Valor de mercado</th>
+          <th>Preço atual</th>
           <th>Preço de venda</th>
           <th>Preço de compra</th>
           <th>Notificando por email</th>
           <th>Intervalo de atualização</th>
+          <th>Última atualização</th>
         </tr>
       </thead>
       <tbody>
@@ -27,17 +25,15 @@
             <td><img src="{{stock.stock.logo}}"/></td>
             <td>{{ stock.stock.stock }}</td>
             <td>R$ {{ stock.close|default:0|floatformat:2 }}</td>
-            <td>{{ stock.change|default:0|floatformat:2 }}%</td>
-            <td>{{ stock.volume }}</td>
-            <td>R$ {{ stock.market_cap| floatformat:2 }}</td>
             <td>R$ {{ stock.selling_price|floatformat:"2" }}</td>
             <td>R$ {{ stock.buying_price|floatformat:"2" }}</td>
             <td>{% if stock.is_notifying == 0 %}Não{% else %}Sim{% endif %}</td>
             <td>{{ stock.update_period }} minuto(s)</td>
+            <td>{{ stock.updated_at }}</td>
           </tr>
         {% empty %}
           <tr>
-            <td colspan="9">No stock information available.</td>
+            <td colspan="9">Sem informações disponíveis.</td>
           </tr>
         {% endfor %}
       </tbody>

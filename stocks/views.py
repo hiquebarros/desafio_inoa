@@ -52,9 +52,6 @@ class StocksListView(ListView):
 
             model_data = {
                 "close": data['stocks'][0]['close'] if data['stocks'][0]['close'] else 0,
-                "change": data['stocks'][0]['change'] if data['stocks'][0]['change'] else 0,
-                "volume": data['stocks'][0]['volume'] if data['stocks'][0]['volume'] else 0,
-                "market_cap": data['stocks'][0]['market_cap'] if data['stocks'][0]['market_cap'] else 0,
                 "selling_price": selling_price, 
                 "buying_price": buying_price,
                 "is_notifying": is_notifying,

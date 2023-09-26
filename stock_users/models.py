@@ -4,9 +4,6 @@ from stocks.models import Stock
 
 class StockUser(models.Model):
     close = models.DecimalField(max_digits=10, decimal_places=8)
-    change = models.DecimalField(max_digits=10, decimal_places=8)
-    volume = models.IntegerField()
-    market_cap = models.BigIntegerField()
     selling_price = models.DecimalField(max_digits=10, decimal_places=2)
     buying_price = models.DecimalField(max_digits=10, decimal_places=2)
     is_notifying = models.IntegerField()
