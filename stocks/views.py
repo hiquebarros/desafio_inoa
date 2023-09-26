@@ -46,7 +46,6 @@ class StocksListView(ListView):
         try:
             response = requests.get(api_url)
             data = response.json()
-            print(data)
 
             if(len(data['stocks']) < 1):
                 raise Exception("A ação não está disponível no momento. Tente novamente mais tarde.")

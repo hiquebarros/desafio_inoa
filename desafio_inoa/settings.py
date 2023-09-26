@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'stock_users',
     'users',
     'bootstrap4',
-    'desafio_inoa'
+    'desafio_inoa',
+    'django_crontab',
 ]
 
 MIDDLEWARE = [
