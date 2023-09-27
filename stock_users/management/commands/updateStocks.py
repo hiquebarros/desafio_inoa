@@ -25,25 +25,28 @@ class Command(BaseCommand):
                 stocks.append(stock_user.stock.stock)
                 stock_users_list.append(stock_user)
 
-        stock_string = ",".join(stocks)
-        api_url = f"https://brapi.dev/api/quote/{stock_string}"
-        response = requests.get(api_url)
-        data = None
+        if(len(stocks) > 0):
+            stock_string = ",".join(stocks)
+            api_url = f"https://brapi.dev/api/quote/{stock_string}"
+            response = requests.get(api_url)
+            data = None
 
-        if response.status_code == 200:
-            try:
-                data = response.json()
-            except ValueError:
-                print("Não foram encontradas ações para atualização.")
+            if response.status_code == 200:
+                try:
+                    data = response.json()
+                    print(data['results'][0])
+                except ValueError:
+                    print("Não foram encontradas ações para atualização.")
 
-        if data is not None:
-            for stock_from_api in data['results']:
-                for stock_user_instance in stock_users_list:
-                    if(stock_user_instance.stock.stock == stock_from_api['symbol']):
-                        Command.handleNotification(stock_user_instance, stock_from_api['regularMarketPrice'])
+            if data is not None:
+                for stock_from_api in data['results']:
+                    for stock_user_instance in stock_users_list:
+                        if(stock_user_instance.stock.stock == stock_from_api['symbol']):
+                            Command.handleNotification(stock_user_instance, stock_from_api['regularMarketPrice'])
 
-                        stock_user_instance.close = stock_from_api['regularMarketPrice']
-                        stock_user_instance.save()
+                            stock_user_instance.close = stock_from_api['regularMarketPrice']
+                            stock_user_instance.last_price_update = timezone.now()
+                            stock_user_instance.save()
 
 
     def handleNotification(stock_user, newPrice):
