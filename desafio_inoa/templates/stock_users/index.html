@@ -17,19 +17,30 @@
           <th>Notificando por email</th>
           <th>Intervalo de atualização</th>
           <th>Última atualização</th>
+          <th>Ações</th>
         </tr>
       </thead>
       <tbody>
         {% for stock in stocks %}
           <tr>
-            <td><img src="{{stock.stock.logo}}"/></td>
+            <td><img style="height: 56px; width: 56px;" src="{{stock.stock.logo}}"/></td>
             <td>{{ stock.stock.stock }}</td>
             <td>R$ {{ stock.close|default:0|floatformat:2 }}</td>
             <td>R$ {{ stock.selling_price|floatformat:"2" }}</td>
             <td>R$ {{ stock.buying_price|floatformat:"2" }}</td>
             <td>{% if stock.is_notifying == 0 %}Não{% else %}Sim{% endif %}</td>
             <td>{{ stock.update_period }} minuto(s)</td>
-            <td>{{ stock.updated_at }}</td>
+            <td>{{ stock.last_price_update }}</td>
+            <td>
+              <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px;">
+                <button class="btn btn-secondary updateStockUserButton" data-toggle="modal" data-target="#updateStockUserModal" data-id="{{stock.id}}">
+                  <i class="fas fa-edit"></i>
+                </button>
+                <button class="btn btn-primary deleteStockUserButton" data-toggle="modal" data-target="#deleteStockUserModal" data-id="{{stock.id}}">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </div>
+            </td>
           </tr>
         {% empty %}
           <tr>
@@ -39,4 +50,103 @@
       </tbody>
     </table>
   </div>
+
+  <div class="modal fade" id="deleteStockUserModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Confirmação</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <form method="POST" action="{% url 'stock_users:delete' %}">
+                {% csrf_token %}
+  
+                <div class="modal-body text-start">
+                  <p>Tem certeza que deseja remover a ação do monitoramento?</p>
+                </div>
+
+                <input type="text" id="stockUser" name="stock_user" hidden>
+
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="updateStockUserModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Atualizar</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <form method="POST" action="{% url 'stock_users:update' %}">
+                {% csrf_token %}
+  
+                <div class="modal-body text-start">
+                  <div class="form-group">
+                      <label for="buying_price">Preço de compra:</label>
+                      <input type="text" id="buying_price" name="buying_price" id="buying_price" class="form-control" required>
+                  </div>
+                  <div class="form-group">
+                      <label for="selling_price">Preço de venda:</label>
+                      <input type="text" id="selling_price" name="selling_price" id="buying_price" class="form-control" required>
+                  </div>
+                  <div class="form-group">
+                      <label for="update_period">Atualizar em:</label>
+                      <select id="update_period" name="update_period" class="form-control" required>
+                        <option value="">Selecione</option>
+                        <option value="1">1 minuto</option>
+                        <option value="5">5 minutos</option>
+                        <option value="10">10 minutos</option>
+                        <option value="15">15 minutos</option>
+                        <option value="30">30 minutos</option>
+                        <option value="60">60 minutos</option>
+                      </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="is_notifying">Notificar por email:</label>
+                    <select id="is_notifying" name="is_notifying" class="form-control">
+                        <option value="">Selecione</option>
+                        <option value="1">Sim</option>
+                        <option value="0">Não</option>
+                    </select>
+                </div>
+
+              </div>
+
+                <input type="text" id="updateStockUser" name="updated_stock_user_id" hidden>
+
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+  </div>
+
+  <script>
+
+    $('#buying_price').mask("#.##0,00", {reverse: true});
+    $('#selling_price').mask("#.##0,00", {reverse: true});
+
+    $(".deleteStockUserButton").on("click", function() {
+      let id = $(this).data("id")
+      $("#stockUser").val('')
+      $("#stockUser").val(id)
+    })
+
+    $(".updateStockUserButton").on("click", function() {
+      let id = $(this).data("id")
+      $("#updateStockUser").val('')
+      $("#updateStockUser").val(id)
+    })
+  </script>
+
 {% endblock %}
