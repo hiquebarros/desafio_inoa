@@ -10,8 +10,8 @@ Esse repositório é referente ao desafio proposto pela empresa INOA. O objetivo
 ## Table of Contents
 
 - [Demonstração](#demonstração)
-- [Pré-requisitos](#prerequisites)
-- [Instalação](#instalacao)
+- [Pré-requisitos](#pré-requisitos)
+- [Instalação](#instalação)
 
 ## Demonstração
 
