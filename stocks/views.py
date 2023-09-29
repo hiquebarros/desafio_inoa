@@ -6,10 +6,11 @@ from users.models import User
 import requests
 from django.db.models import Subquery
 from decimal import Decimal
-from re import sub
-
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 
 class StocksListView(ListView):
+    
     def get(self, request): 
         try:
             user = User.objects.get(pk=request.user.id)
@@ -20,7 +21,7 @@ class StocksListView(ListView):
             
             return render(request, 'stocks/index.html', {'stocks': stocks})
         except User.DoesNotExist:
-            return render(request, 'stocks/user_not_found.html')
+            return HttpResponseRedirect(reverse('users:login'))
     
     def post(self, request):
 

@@ -7,10 +7,15 @@ from decimal import Decimal
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
-# Create your views here.
 
 class UserStocksView(View):
     def get(self, request, user_id):
+
+        user = request.user
+
+        if not user.is_authenticated:
+             return HttpResponseRedirect(reverse('users:login'))
+
         try:
             user = User.objects.get(pk=user_id)
             stock_users = StockUser.objects.filter(user_id=user_id)
