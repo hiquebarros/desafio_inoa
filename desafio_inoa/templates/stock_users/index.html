@@ -30,7 +30,7 @@
             <td>R$ {{ stock.buying_price|floatformat:"2" }}</td>
             <td>{% if stock.is_notifying == 0 %}Não{% else %}Sim{% endif %}</td>
             <td>{{ stock.update_period }} minuto(s)</td>
-            <td>{{ stock.last_price_update }}</td>
+            <td>{{ stock.last_price_update|date:"d/m/Y" }} às {{ stock.last_price_update|time:"H:i" }}</td>
             <td>
               <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px;">
                 <button class="btn btn-secondary updateStockUserButton" data-toggle="modal" data-target="#updateStockUserModal" data-id="{{stock.id}}" data-selling-price="{{stock.selling_price}}" data-buying-price="{{stock.buying_price}}" data-is-notifying="{{stock.is_notifying}}" data-update-period="{{stock.update_period}}">
@@ -157,6 +157,9 @@
 
       $("#updateStockUser").val('')
       $("#updateStockUser").val(id)
+
+      $('#buying_price').trigger('input');
+      $('#selling_price').trigger('input');
     })
   </script>
 

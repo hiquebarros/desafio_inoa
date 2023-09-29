@@ -74,7 +74,7 @@ class Command(BaseCommand):
         template = Template(html_template)
         rendered_html = template.render(
             stock_logo=stock_user.stock.logo,
-            stock_close=stock_user.close,
+            stock_close=float(stock_user.close),
             username=stock_user.user.username,
             stock_name=stock_user.stock.name
         )
@@ -89,9 +89,9 @@ class Command(BaseCommand):
             with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
                 smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
                 smtp.send_message(msg)
-            print("Email sent successfully")
+            print("Email enviado com sucesso")
         except Exception as e:
-            print("Error sending email:", str(e))
+            print("Erro ao enviar email:", str(e))
 
     def notifySell(stock_user):
 
@@ -110,7 +110,7 @@ class Command(BaseCommand):
         template = Template(html_template)
         rendered_html = template.render(
             stock_logo=stock_user.stock.logo,
-            stock_close=stock_user.close,
+            stock_close=float(stock_user.close),
             username=stock_user.user.username,
             stock_name=stock_user.stock.name
         )
@@ -125,8 +125,8 @@ class Command(BaseCommand):
             with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
                 smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
                 smtp.send_message(msg)
-            print("Email sent successfully")
+            print("Email enviado com sucesso")
         except Exception as e:
-            print("Error sending email:", str(e))
+            print("Erro ao enviar email:", str(e))
 
         
