@@ -33,7 +33,7 @@
             <td>{{ stock.last_price_update }}</td>
             <td>
               <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px;">
-                <button class="btn btn-secondary updateStockUserButton" data-toggle="modal" data-target="#updateStockUserModal" data-id="{{stock.id}}">
+                <button class="btn btn-secondary updateStockUserButton" data-toggle="modal" data-target="#updateStockUserModal" data-id="{{stock.id}}" data-selling-price="{{stock.selling_price}}" data-buying-price="{{stock.buying_price}}" data-is-notifying="{{stock.is_notifying}}" data-update-period="{{stock.update_period}}">
                   <i class="fas fa-edit"></i>
                 </button>
                 <button class="btn btn-primary deleteStockUserButton" data-toggle="modal" data-target="#deleteStockUserModal" data-id="{{stock.id}}">
@@ -91,7 +91,7 @@
                 <div class="modal-body text-start">
                   <div class="form-group">
                       <label for="buying_price">Preço de compra:</label>
-                      <input type="text" id="buying_price" name="buying_price" id="buying_price" class="form-control" required>
+                      <input type="text" id="buying_price" name="buying_price" id="selling_price" class="form-control" required>
                   </div>
                   <div class="form-group">
                       <label for="selling_price">Preço de venda:</label>
@@ -99,7 +99,7 @@
                   </div>
                   <div class="form-group">
                       <label for="update_period">Atualizar em:</label>
-                      <select id="update_period" name="update_period" class="form-control" required>
+                      <select id="update_period" name="update_period" class="form-control" id="update_period" required>
                         <option value="">Selecione</option>
                         <option value="1">1 minuto</option>
                         <option value="5">5 minutos</option>
@@ -111,7 +111,7 @@
                   </div>
                   <div class="form-group">
                     <label for="is_notifying">Notificar por email:</label>
-                    <select id="is_notifying" name="is_notifying" class="form-control">
+                    <select id="is_notifying" name="is_notifying" class="form-control" id="is_notifying" required>
                         <option value="">Selecione</option>
                         <option value="1">Sim</option>
                         <option value="0">Não</option>
@@ -144,6 +144,17 @@
 
     $(".updateStockUserButton").on("click", function() {
       let id = $(this).data("id")
+
+      let selling_price = $(this).data("selling-price")
+      let buying_price = $(this).data("buying-price")
+      let is_notifying = $(this).data("is-notifying")
+      let update_period = $(this).data("update-period")
+
+      $("#selling_price").val(selling_price)
+      $("#buying_price").val(buying_price)
+      $("#is_notifying").val(is_notifying)
+      $("#update_period").val(update_period)
+
       $("#updateStockUser").val('')
       $("#updateStockUser").val(id)
     })
