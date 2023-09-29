@@ -9,7 +9,7 @@ Esse repositório é referente ao desafio proposto pela empresa INOA. O objetivo
 
 ## Table of Contents
 
-- [Demonstração](#demo)
+- [Demonstração](#demonstração)
 - [Pré-requisitos](#prerequisites)
 - [Instalação](#instalacao)
 
@@ -25,19 +25,19 @@ Esse repositório é referente ao desafio proposto pela empresa INOA. O objetivo
 - Clone o repo:
 $ git clone https://github.com/hiquebarros/desafio_inoa.git
 
-- Cria um ambiente virtual (aqui apelidamos de venv):
+- Crie um ambiente virtual (aqui apelidamos de venv):
 $ python -m venv venv
 
-- Ativar o venv
+- Ative o venv
 $ venv/scripts/activate
 
-- Instalar as dependências do projeto
+- Instale as dependências do projeto
 $ pip install -r requirements.txt
 
-- Rodar migrações
+- Rode migrações
 $ python manage.py migrate
 
-- Executar o projeto (aqui estamos usando o a flag --noreload para o ambiente de desenvolvimento não iniciar a job de atualização de preços 2 vezes)
+- Execute o projeto (aqui estamos usando o a flag --noreload para o ambiente de desenvolvimento não iniciar a job de atualização de preços 2 vezes)
 $ python manage.py runserver --noreload
 
 ```
