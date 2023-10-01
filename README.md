@@ -14,7 +14,7 @@ Esse repositório é referente ao desafio proposto pela empresa INOA. O objetivo
 - [Instalação](#instalação)
 
 ## Demonstração
-
+![Demo GIF](inoa_gif.gif)
 ## Pré-requisitos
 
 É necessário que você tenha as seguintes ferramentas instaladas em seu computador: Git, PIP, Python, PIP.
