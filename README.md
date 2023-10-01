@@ -7,7 +7,7 @@ Esse repositório é referente ao desafio proposto pela empresa INOA. O objetivo
 •	Enviar e-mail para o investidor sugerindo Compra sempre que o preço de um ativo monitorado cruzar o seu limite inferior, e sugerindo Venda sempre que o preço de um ativo monitorado cruzar o seu limite superior
 
 
-## Table of Contents
+## Tabela de conteúdos
 
 - [Demonstração](#demonstração)
 - [Pré-requisitos](#pré-requisitos)
@@ -53,6 +53,12 @@ $ python manage.py stocksDump
 ![](inoa_trello_board.png)
 
 2- A lógica que usei na criação do CRON foi de acionar um job durante a inicialização de um app, e fazer toda lógica de atualização a partir deste único JOB. Não acredito que seja o melhor approach, mas tive dificuldades em encontrar uma boa biblioteca de CRON compatível com windows. A grande maioria utiliza o agendadores de tarefas nativo no Linux.
+
+3- A senha de app do email está chumbada no código. Em um cenário real, estaria como variável de ambiente.
+
+![](inoa_email_notification.png)
+
+4- A API de terceiros utilizada tem um recurso premium que compromete o funcionamento do teste. Caso um usuário tenha mais de uma ação em sua carteira, a requisição retornará 400, pois apenas usuários premium podem dar get em mais de uma ação ao mesmo tempo.
 
 
 
