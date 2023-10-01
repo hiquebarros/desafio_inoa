@@ -54,7 +54,7 @@ $ python manage.py stocksDump
 
 2- A lógica que usei na criação do CRON foi de acionar um job durante a inicialização de um app, e fazer toda lógica de atualização a partir deste único JOB. Não acredito que seja o melhor approach, mas tive dificuldades em encontrar uma boa biblioteca de CRON compatível com windows. A grande maioria utiliza o agendadores de tarefas nativo no Linux.
 
-3- A senha de app do email está chumbada no código. Em um cenário real, estaria como variável de ambiente.
+3- A senha de app do email está chumbada no código. Em um cenário real, estaria como variável de ambiente. O email foi criado apenas para a realização do teste.
 
 ![](inoa_email_notification.png)
 
