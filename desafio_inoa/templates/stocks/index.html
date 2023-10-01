@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if error_message %}
+<div class="alert alert-danger">
+  {{ error_message }}
+</div>
+{% endif %}
+
+<div class="my-2">
+  <div class="w-100 d-flex justify-content-start">
+    <h1 class="mb-4">Listagem</h1>
+  </div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Logo</th>
+          <th>Sigla</th>
+          <th>Nome</th>
+          <th>Setor</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for stock in stocks %}
+          <tr>
+            <td><img style="height: 56px; width: 56px;" src="{{stock.logo}}"/></td>
+            <td>{{ stock.stock }}</td>
+            <td>{{ stock.name }}</td>
+            <td>{{ stock.sector }}</td>
+            <td>
+              <button class="btn btn-primary addStockButton" data-toggle="modal" data-target="#addStockModal" data-stock-name="{{stock.stock}}">
+                  <i class="fas fa-check"></i>
+              </button>
+          </td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="9">Sem informações disponíveis no momento.</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="modal fade" id="addStockModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Monitorar</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <form method="POST" action="{% url 'stocks:index' %}">
+                {% csrf_token %}
+                <div id="price-alert">
+
+                </div>
+                <div class="modal-body text-start">
+                    <div class="form-group">
+                        <label for="buying_price">Preço de compra:</label>
+                        <input type="text" id="buying_price" name="buying_price" id="buying_price" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="selling_price">Preço de venda:</label>
+                        <input type="text" id="selling_price" name="selling_price" id="buying_price" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="update_period">Atualizar em:</label>
+                        <select id="update_period" name="update_period" class="form-control" required>
+                          <option value="">Selecione</option>
+                          <option value="1">1 minuto</option>
+                          <option value="5">5 minutos</option>
+                          <option value="10">10 minutos</option>
+                          <option value="15">15 minutos</option>
+                          <option value="30">30 minutos</option>
+                          <option value="60">60 minutos</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="is_notifying">Notificar por email:</label>
+                      <select id="is_notifying" name="is_notifying" class="form-control">
+                          <option value="">Selecione</option>
+                          <option value="1">Sim</option>
+                          <option value="0">Não</option>
+                      </select>
+                  </div>
+                  <input type="text" id="stock" name="stock" hidden>
+                </div>
+
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+
+  $('#buying_price').mask("#.##0,00", {reverse: true});
+  $('#selling_price').mask("#.##0,00", {reverse: true});
+
+  $(".addStockButton").on("click", function() {
+    let stock = $(this).data("stock-name")
+    $("#stock").val('')
+    $("#stock").val(stock)
+
+    api_url = `https://brapi.dev/api/quote/list?sortBy=close&sortOrder=desc&limit=10&search=${stock}`
+
+    $.ajax({
+        url: api_url,
+        method: "GET",
+        dataType: "json",
+        success: function(response) {
+          if (response.stocks.length > 0) {
+                let currentPrice = response.stocks[0].close;
+                let message = `A cotação atual para essa ação é de R$ ${currentPrice.toFixed(2)}`;
+
+                $("#price-alert").html(`<div class="alert alert-info">${message}</div>`);
+            } else {
+
+                $("#price-alert").html('<div class="alert alert-danger">Nenhuma informação encontrada.</div>');
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.error("API Error:", textStatus, errorThrown);
+        }
+    });
+
+});
+
+
+
+</script>
+
+</html>
+
+  {% endblock %}

@@ -1,0 +1,34 @@
+# Ignore compiled Python files
+*.pyc
+__pycache__/
+
+# Ignore the virtual environment
+venv/
+env/
+
+# Ignore database files
+db.sqlite3
+*.db
+
+# Ignore static files
+staticfiles/
+static/
+media/
+
+# Ignore log files
+*.log
+
+# Ignore other development artifacts
+*.bak
+*.swp
+*.swo
+*.pyo
+*.orig
+
+# Ignore IDE-specific files and directories
+.idea/
+.vscode/
+
+# Ignore package dependency files
+pip-lock.txt
+pipenv.lock
