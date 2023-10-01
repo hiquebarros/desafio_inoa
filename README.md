@@ -49,16 +49,16 @@ $ python manage.py stocksDump
 
 ## Considerações
 
-1- O projeto foi desenvolvido utilizando apenas a branch develop, com um merge final na master. Poderia ter sido seguido o gitflow com criação de branches, mas achei conveniente trabalhar com apenas uma branch e separar o código por tasks do kanban.
+1- O projeto foi desenvolvido utilizando apenas a branch develop, com um merge final na master. A divisão de commits segue essa divisão de tasks.
 ![](inoa_trello_board.png)
 
-2- A lógica que usei na criação do CRON foi de acionar um job durante a inicialização de um app, e fazer toda lógica de atualização a partir deste único JOB. Não acredito que seja o melhor approach, mas tive dificuldades em encontrar uma boa biblioteca de CRON compatível com windows. A grande maioria utiliza o agendadores de tarefas nativo no Linux.
+2- A lógica usada na criação do CRON foi de acionar um job durante a inicialização de um app, e fazer toda lógica de atualização a partir deste único JOB. Não acredito que seja o melhor approach, mas tive dificuldades em encontrar uma boa biblioteca de CRON compatível com windows. A grande maioria utiliza o agendadores de tarefas nativo no Linux.
 
 3- A senha de app do email está chumbada no código. Em um cenário real, estaria como variável de ambiente. O email foi criado apenas para a realização do teste.
 
 ![](inoa_email_notification.png)
 
-4- A API de terceiros utilizada tem um recurso premium que compromete o funcionamento do teste. Caso um usuário tenha mais de uma ação em sua carteira, a requisição retornará 400, pois apenas usuários premium podem dar get em mais de uma ação ao mesmo tempo.
+4- A API de terceiros utilizada tem um recurso premium que compromete o funcionamento do teste. Caso um usuário tenha mais de uma ação em sua carteira, a requisição de atualizaçao das ações retornará 400, pois apenas usuários premium podem dar get em mais de uma ação ao mesmo tempo.
 
 
 
