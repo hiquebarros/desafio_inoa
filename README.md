@@ -14,7 +14,7 @@ Esse repositório é referente ao desafio proposto pela empresa INOA. O objetivo
 - [Instalação](#instalação)
 
 ## Demonstração
-![Alt Text](inoa_gif.gif)
+![GIF](./inoa_gif.gif)
 
 ## Pré-requisitos
 
