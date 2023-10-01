@@ -117,7 +117,7 @@
         success: function(response) {
           if (response.stocks.length > 0) {
                 let currentPrice = response.stocks[0].close;
-                let message = `A cotação atual para essa ação é de R$ ${currentPrice}`;
+                let message = `A cotação atual para essa ação é de R$ ${currentPrice.toFixed(2)}`;
 
                 $("#price-alert").html(`<div class="alert alert-info">${message}</div>`);
             } else {
