@@ -12,13 +12,14 @@ Esse repositório é referente ao desafio proposto pela empresa INOA. O objetivo
 - [Demonstração](#demonstração)
 - [Pré-requisitos](#pré-requisitos)
 - [Instalação](#instalação)
+- [Considerações](#considerações)
 
 ## Demonstração
 ![](https://github.com/desafio_inoa/inoa_gif.gif)
 
 ## Pré-requisitos
 
-É necessário que você tenha as seguintes ferramentas instaladas em seu computador: Git, PIP, Python, PIP.
+É necessário que você tenha as seguintes ferramentas instaladas em seu computador: Git, Python, PIP, SQlite.
 
 ## Instalação
 
@@ -41,4 +42,18 @@ $ python manage.py migrate
 - Execute o projeto (aqui estamos usando o a flag --noreload para o ambiente de desenvolvimento não iniciar a job de atualização de preços 2 vezes)
 $ python manage.py runserver --noreload
 
+- Popule o banco de dados com as ações de teste
+$ python manage.py stocksDump
+
 ```
+
+## Considerações
+
+1- O projeto foi desenvolvido utilizando apenas a branch develop, com um merge final na master. Poderia ter sido seguido o gitflow com criação de branches, mas achei conveniente trabalhar com apenas uma branch e separar o código por tasks do kanban.
+![](inoa_trello_board.png)
+
+2- A lógica que usei na criação do CRON foi de acionar um job durante a inicialização de um app, e fazer toda lógica de atualização a partir deste único JOB. Não acredito que seja o melhor approach, mas tive dificuldades em encontrar uma boa biblioteca de CRON compatível com windows. A grande maioria utiliza o agendadores de tarefas nativo no Linux.
+
+
+
+
