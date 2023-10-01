@@ -15,7 +15,7 @@ Esse repositório é referente ao desafio proposto pela empresa INOA. O objetivo
 - [Considerações](#considerações)
 
 ## Demonstração
-![](https://github.com/desafio_inoa/inoa_gif.gif)
+![](inoa_gif.gif)
 
 ## Pré-requisitos
 
