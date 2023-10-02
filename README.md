@@ -30,8 +30,8 @@ $ git clone https://github.com/hiquebarros/desafio_inoa.git
 - Crie um ambiente virtual (aqui apelidamos de venv):
 $ python -m venv venv
 
-- Ative o venv
-$ venv/scripts/activate
+- Ative o venv (depende do Sistema Operacional)
+$ venv/scripts/activate ou source venv/bin/activate
 
 - Instale as dependências do projeto
 $ pip install -r requirements.txt
